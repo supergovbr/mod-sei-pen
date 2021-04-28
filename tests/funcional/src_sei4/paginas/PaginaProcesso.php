@@ -136,7 +136,7 @@ class PaginaProcesso extends PaginaTeste
         try
         {
             $this->test->frame(null);
-            $this->test->frame("divIframeArvore");
+            $this->test->frame("ifrArvore");
             $this->test->byXPath("//img[@title='Processo Bloqueado']");
             return true;
         }
