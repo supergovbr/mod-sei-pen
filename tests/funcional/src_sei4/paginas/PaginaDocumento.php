@@ -49,7 +49,7 @@ class PaginaDocumento extends PaginaTeste
         try {
             $this->test->frame(null);
             $this->test->frame("ifrVisualizacao");
-            $this->test->byXPath("//div[@id='divInformacao']/a[contains(@href, 'acao=procedimento_trabalhar')]");
+            $this->test->byXPath("//div[@id='divArvoreInformacao']/a[contains(@href, 'acao=procedimento_trabalhar')]");
             $this->test->byXPath("//img[contains(@alt, 'Desanexar Processo')]");
             return true;
         } catch (\Exception $e) {

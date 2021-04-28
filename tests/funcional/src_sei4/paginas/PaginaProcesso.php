@@ -113,7 +113,7 @@ class PaginaProcesso extends PaginaTeste
     {
         $this->test->frame(null);
         $this->test->frame("ifrVisualizacao");
-        return $this->test->byId('divInformacao')->text();
+        return $this->test->byId('divArvoreInformacao')->text();
     }
 
     public function processoAberto()
@@ -136,7 +136,7 @@ class PaginaProcesso extends PaginaTeste
         try
         {
             $this->test->frame(null);
-            $this->test->frame("ifrArvore");
+            $this->test->frame("divIframeArvore");
             $this->test->byXPath("//img[@title='Processo Bloqueado']");
             return true;
         }
