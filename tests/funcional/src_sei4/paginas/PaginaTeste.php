@@ -33,7 +33,6 @@ class PaginaTeste
     public function unidadeContexto($unidadeContexto)
     {
         $this->test->frame(null);
-            $unidadeContexto="TESTE_1";
             $this->test->byXPath("(//a[@id='lnkInfraUnidade'])[2]")->click();
             $this->test->byXPath("//td[contains(.,'" . $unidadeContexto . "')]")->click();
 

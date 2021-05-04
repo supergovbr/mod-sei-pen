@@ -119,13 +119,16 @@ class ProcessoEletronicoINT extends InfraINT {
                     break;
                 case '/pen_expedir_procedimento.gif':
                     // return '/infra_css/svg/upload.svg';
-                    return 'svg/arquivo_mapeamento_assunto.svg';
+                    // return 'svg/arquivo_mapeamento_assunto.svg';
+                    return 'modulos/pen/imagens/pen_enviar.png';
                     break;
                 case '/pen_consultar_recibos.gif':
-                    return '/infra_css/svg/pesquisar.svg';
+                    // return '/infra_css/svg/pesquisar.svg';
+                    return 'modulos/pen/imagens/processo_pesquisar_pen.png';
                     break;
                 case '/pen_cancelar_tramite.gif':
-                    return '/infra_css/svg/remover.svg';
+                    // return '/infra_css/svg/remover.svg';
+                    return 'modulos/pen/imagens/pen_cancelar_envio.png';
                     break;
                 case '/infra_js/arvore/plus.gif':
                     return '/infra_css/svg/mais.svg';

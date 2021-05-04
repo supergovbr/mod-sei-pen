@@ -466,6 +466,28 @@ class CenarioBaseTestCase extends Selenium2TestCase
         );
     }
 
+    public function gerarDadosDocumentoExternoGrandeTeste($contextoProducao, $nomesArquivo='arquivo_grande_gerado.txt',$tamanhoMB=100 ,  $ordemDocumentoReferenciado=null)
+    {
+        // Tratamento para lista de arquivos em casos de documentos com mais de um componente digital
+        $pasta = self::PASTA_ARQUIVOS_TESTE;
+        shell_exec('dd if=/dev/zero of=' . self::PASTA_ARQUIVOS_TESTE . '/' . $nomesArquivo . ' bs=1M count=' . $tamanhoMB);
+        $arquivos = "$pasta/$nomesArquivo";
+
+        return array(
+            'TIPO' => 'R', // Documento do tipo Recebido pelo sistema
+            "NUMERO" => null, //Gerado automaticamente no cadastramento do documento
+            "TIPO_DOCUMENTO" => $contextoProducao['TIPO_DOCUMENTO'],
+            "DATA_ELABORACAO" => '01/01/2017',
+            "DESCRICAO" => str_repeat(util::random_string(9) . ' ', 10),
+            "OBSERVACOES" => util::random_string(500),
+            "INTERESSADOS" => str_repeat(util::random_string(9) . ' ', 25),
+            "ORDEM_DOCUMENTO_REFERENCIADO" => $ordemDocumentoReferenciado,
+            "RESTRICAO" => PaginaIniciarProcesso::STA_NIVEL_ACESSO_PUBLICO,
+            "ARQUIVO" => $arquivos,
+            "ORIGEM" => $contextoProducao['URL'],
+        );
+    }
+
     protected function realizarTramiteExterno(&$processoTeste, $documentosTeste, $remetente, $destinatario, $validarTramite)
     {
         $orgaosDiferentes = $remetente['URL'] != $destinatario['URL'];
@@ -564,7 +586,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         // 14 - Validar dados do documento
         $documentosTeste = array_key_exists('TIPO', $documentosTeste) ? array($documentosTeste) : $documentosTeste;
-        $this->assertEquals(count($listaDocumentos), count($documentosTeste));
+        $this->assertEquals(count($listaDocumentos)/2, count($documentosTeste));
 
         for ($i=0; $i < count($listaDocumentos); $i++) {
             $this->validarDadosDocumento($listaDocumentos[$i], $documentosTeste[$i], $destinatario, $unidadeSecundaria);
