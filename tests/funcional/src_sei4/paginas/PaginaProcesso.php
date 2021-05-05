@@ -221,7 +221,7 @@ class PaginaProcesso extends PaginaTeste
     {
         $this->test->frame(null);
         $this->test->frame("ifrArvore");
-        $itens = $this->test->elements($this->test->using('css selector')->value('div.infraArvore > a > span'));
+        $itens = $this->test->elements($this->test->using('css selector')->value('div.infraArvore > a > span[id]'));
         return array_map(function($item) {return $item->text();}, $itens);
     }
 
