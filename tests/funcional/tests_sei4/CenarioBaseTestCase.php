@@ -586,7 +586,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
         // 14 - Validar dados do documento
         $documentosTeste = array_key_exists('TIPO', $documentosTeste) ? array($documentosTeste) : $documentosTeste;
-        $this->assertEquals(count($listaDocumentos)/2, count($documentosTeste));
+        $this->assertEquals(count($listaDocumentos), count($documentosTeste));
 
         for ($i=0; $i < count($listaDocumentos); $i++) {
             $this->validarDadosDocumento($listaDocumentos[$i], $documentosTeste[$i], $destinatario, $unidadeSecundaria);
