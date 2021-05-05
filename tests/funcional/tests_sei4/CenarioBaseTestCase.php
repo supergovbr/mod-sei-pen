@@ -525,6 +525,8 @@ class CenarioBaseTestCase extends Selenium2TestCase
             // 6 - Verificar se situação atual do processo está como bloqueado
             $this->waitUntil(function($testCase) use (&$orgaosDiferentes){
                 sleep(5);
+                exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+                exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
                 $testCase->refresh();
                 $paginaProcesso = new PaginaProcesso($testCase);
                 $testCase->assertStringNotContainsString(utf8_encode("Processo em trâmite externo para "), $paginaProcesso->informacao());
