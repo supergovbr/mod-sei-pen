@@ -153,7 +153,6 @@ class PaginaProcesso extends PaginaTeste
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
             if($bolDevePossuir){
-                // $this->test->byLinkText($nomeDocumentoArvore)->byXPath(".//following-sibling::a[1]/img[@src='imagens/anexos.gif']");
                 $this->test->byCssSelector("img[src='imagens/anexos.gif'][title='". $nomeDocumentoArvore. "']");
             }
             return true;
@@ -170,7 +169,7 @@ class PaginaProcesso extends PaginaTeste
     	{
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
-            $this->test->byLinkText($nomeDocumentoArvore)->byXPath(".//preceding-sibling::a[1]/img[@src='imagens/protocolo_cancelado.gif']");
+            $this->test->byLinkText($nomeDocumentoArvore)->using('css selector')->value('div.infraArvore > a > img[src="svg/documento_cancelado.svg?10"]');
             return true;
     	}
     	catch(Exception $e)
@@ -185,7 +184,7 @@ class PaginaProcesso extends PaginaTeste
     	{
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
-            $this->test->byLinkText($nomeDocumentoArvore)->byXPath(".//preceding-sibling::a[1]/img[@src='imagens/sei_documento_movido.gif']");
+            $this->test->byLinkText($nomeDocumentoArvore)->using('css selector')->value('div.infraArvore > a > img[src="svg/documento_movido.svg?10"]');
             return true;
     	}
     	catch(Exception $e)
