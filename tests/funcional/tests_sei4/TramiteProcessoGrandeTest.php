@@ -11,6 +11,26 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
     public static $documentoTeste4;
     public static $protocoloTeste;
 
+    public static function setUpBeforeClass() :void {
+
+        $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);    
+        $bancoOrgaoA->execute("update infra_parametro set valor = ? where nome = ?", array(120, 'SEI_TAM_MB_DOC_EXTERNO'));        
+
+        $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);    
+        $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(120, 'SEI_TAM_MB_DOC_EXTERNO'));
+
+    }      
+        
+    public static function tearDownAfterClass() :void {
+
+        $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);    
+        $bancoOrgaoA->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
+
+        $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);    
+        $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
+
+    }   
+
     /**
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
