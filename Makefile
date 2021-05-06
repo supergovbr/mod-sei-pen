@@ -69,8 +69,8 @@ install-dev:
 test-environment-provision:	
 	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 up -d	
 	@echo "Sleeping for 60 seconds ..."; sleep 60;
-	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org1-http yum install -y php-xdebug
-	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org2-http yum install -y php-xdebug
+	# docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org1-http yum install -y php-xdebug
+	# docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org2-http yum install -y php-xdebug
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org1-http bash -c "printenv | sed 's/^\(.*\)$$/export \1/g' > /root/crond_env.sh"
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org1-http chown -R root:root /etc/cron.d/
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org1-http chmod 0644 /etc/cron.d/sei
@@ -140,3 +140,10 @@ tramitar-pendencias:
 		sudo docker exec -it org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
 		i=$$((i + 1));\
   	done
+
+# criar a variavel de ambiente no shell: 
+# export XDEBUG_CONFIG='idekey=default remote_enable=1 remote_mode=req remote_port=9003 remote_host=127.0.0.1 remote_connect_back=1'
+# rodar como:
+# make teste=TramiteProcessoComDevolucaoTest run-test-xdebug
+run-test-xdebug:
+	$(PEN_TEST_FUNC)/vendor/phpunit/phpunit/phpunit -c $(PEN_TEST_FUNC)/phpunit.xml --stop-on-failure $(PEN_TEST_FUNC)/tests_sei4/$(addsuffix .php,$(teste))

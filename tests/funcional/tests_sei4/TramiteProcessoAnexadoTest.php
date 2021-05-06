@@ -87,6 +87,8 @@ class TramiteProcessoAnexadoTest extends CenarioBaseTestCase
 
         $this->waitUntil(function ($testCase) use (&$orgaosDiferentes) {
             sleep(5);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
             $testCase->refresh();
             $paginaProcesso = new PaginaProcesso($testCase);
             $testCase->assertStringNotContainsString(utf8_encode("Processo em trâmite externo para "), $paginaProcesso->informacao());

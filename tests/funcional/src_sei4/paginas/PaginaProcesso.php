@@ -153,7 +153,8 @@ class PaginaProcesso extends PaginaTeste
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
             if($bolDevePossuir){
-                $this->test->byLinkText($nomeDocumentoArvore)->byXPath(".//following-sibling::a[1]/img[@src='imagens/anexos.gif']");
+                // $this->test->byLinkText($nomeDocumentoArvore)->byXPath(".//following-sibling::a[1]/img[@src='imagens/anexos.gif']");
+                $this->test->byCssSelector("img[src='imagens/anexos.gif'][title='". $nomeDocumentoArvore. "']");
             }
             return true;
     	}

@@ -309,6 +309,8 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $mensagem = utf8_encode($mensagem);
         $this->waitUntil(function($testCase) use ($mensagem, $verificarReciboEnvio, $verificarReciboConclusao) {
             sleep(5);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
             $testCase->refresh();
             $testCase->paginaProcesso->navegarParaConsultarRecibos();
             $this->assertTrue($testCase->paginaReciboTramite->contemTramite($mensagem, $verificarReciboEnvio, $verificarReciboConclusao));

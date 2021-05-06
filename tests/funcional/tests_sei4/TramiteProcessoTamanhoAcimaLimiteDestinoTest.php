@@ -67,6 +67,8 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
         // 6 - Verificar se situação atual do processo está como bloqueado
         $this->waitUntil(function($testCase)  {
             sleep(5);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+            exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
             $testCase->refresh();
             $paginaProcesso = new PaginaProcesso($testCase);
             $testCase->assertStringContainsString(utf8_encode("Processo aberto somente na unidade"), $paginaProcesso->informacao());
