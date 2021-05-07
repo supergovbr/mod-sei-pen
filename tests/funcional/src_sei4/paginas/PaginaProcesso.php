@@ -109,6 +109,11 @@ class PaginaProcesso extends PaginaTeste
         }, PEN_WAIT_TIMEOUT);
     }
 
+    public function navegarParaTramitarProcessoInterno()
+    {
+        $this->enviarProcesso();
+    }
+
     public function informacao()
     {
         $this->test->frame(null);

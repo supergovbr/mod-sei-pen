@@ -59,4 +59,26 @@ class PaginaTramitarProcesso extends PaginaTeste
         $btnFechar = $this->test->byXPath("//input[@id='btnFechar']");
         $btnFechar->click();
     }
+
+    public function unidadeInterna($nomeUnidade)
+    {
+        $this->unidadeInput =$this->test->byId('txtUnidade');
+        $this->unidadeInput->value($nomeUnidade);
+        //$this->test->keys(Keys::ENTER);
+        $this->test->waitUntil(function($testCase) use($nomeUnidade) {
+            $nomeUnidade = $testCase->byId('txtUnidade')->value();
+            sleep(1);
+            $testCase->byPartialLinkText($nomeUnidade)->click();
+            return true;
+        }, PEN_WAIT_TIMEOUT);
+
+        sleep(1);
+        return $this->unidadeInput->value();
+    }
+
+    public function tramitarInterno()
+    {
+        $tramitarButton = $this->test->byXPath("//button[@value='Enviar']");
+        $tramitarButton->click();
+    }    
 }

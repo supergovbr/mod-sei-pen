@@ -188,6 +188,11 @@ class CenarioBaseTestCase extends Selenium2TestCase
         PaginaTeste::selecionarUnidadeContexto($this, $siglaUnidade);
     }
 
+    protected function selecionarUnidadeInterna($unidadeDestino)
+    {
+        PaginaTeste::selecionarUnidadeContexto($this, $unidadeDestino);
+    }
+
     protected function sairSistema()
     {
         $this->paginaBase->sairSistema();
@@ -299,6 +304,48 @@ class CenarioBaseTestCase extends Selenium2TestCase
         } finally {
             $this->frame(null);
             $this->frame("ifrVisualizacao");
+        }
+
+        sleep(1);
+    }
+
+    protected function tramitarProcessoInternamente($unidadeDestino)
+    {
+        // Acessar funcionalidade de trâmite interno
+        $this->paginaProcesso->navegarParaTramitarProcessoInterno();
+
+        // Preencher parâmetros do trâmite
+        $this->paginaTramitar->unidadeInterna($unidadeDestino);
+        $this->paginaTramitar->tramitarInterno();
+
+        sleep(1);
+    }
+
+    protected function navegarParaCancelarDocumento($ordemDocumento)
+    {
+        $listaDocumentos = $this->paginaProcesso->listarDocumentos();
+        $this->paginaProcesso->selecionarDocumento($listaDocumentos[$ordemDocumento]);
+        $this->paginaDocumento->navegarParaCancelarDocumento();
+    }
+
+    protected function tramitarProcessoInternamenteParaCancelamento($unidadeOrigem, $unidadeDestino, $protocolo)
+    {
+        //Tramitar internamento para liberação da funcionalidade de cancelar
+        $this->tramitarProcessoInternamente($unidadeDestino);
+
+        //Selecionar unidade interna
+        $this->selecionarUnidadeInterna($unidadeDestino);
+        if($protocolo){
+            $this->paginaControleProcesso->abrirProcesso($protocolo['PROTOCOLO']);
+        }        
+
+        //Tramitar internamento para liberação da funcionalidade de cancelar
+        $this->tramitarProcessoInternamente($unidadeOrigem);
+        
+        //Selecionar unidade interna
+        $this->selecionarUnidadeInterna($unidadeOrigem);
+        if($protocolo){
+            $this->paginaControleProcesso->abrirProcesso($protocolo['PROTOCOLO']);
         }
 
         sleep(1);

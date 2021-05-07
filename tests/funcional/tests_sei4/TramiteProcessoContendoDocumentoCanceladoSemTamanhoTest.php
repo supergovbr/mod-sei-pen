@@ -12,9 +12,6 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
     public static $destinatario;
     public static $processoTeste;
     public static $documentoTeste1;
-    public static $documentoTeste2;
-    public static $documentoTeste3;
-    public static $documentoTeste4;
     public static $protocoloTeste;
 
     /**
@@ -33,9 +30,6 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
         self::$processoTeste = $this->gerarDadosProcessoTeste(self::$remetente);
         
         self::$documentoTeste1 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
-        self::$documentoTeste2 = $this->gerarDadosDocumentoInternoTeste(self::$remetente);
-        self::$documentoTeste3 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
-        
 
         // Acessar sistema do this->REMETENTE do processo
         $this->acessarSistema(self::$remetente['URL'], self::$remetente['SIGLA_UNIDADE'], self::$remetente['LOGIN'], self::$remetente['SENHA']);
@@ -44,7 +38,11 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
         $this->paginaBase->navegarParaControleProcesso();
         self::$protocoloTeste = $this->cadastrarProcesso(self::$processoTeste);
         $this->cadastrarDocumentoExterno(self::$documentoTeste1);
-        $this->paginaDocumento->navegarParaCancelarDocumento();
+
+        //Tramitar internamento para liberação da funcionalidade de cancelar
+        $this->tramitarProcessoInternamenteParaCancelamento(self::$remetente['SIGLA_UNIDADE'], self::$remetente['SIGLA_UNIDADE_SECUNDARIA'], self::$processoTeste);
+
+        $this->navegarParaCancelarDocumento(0);
         $this->paginaCancelarDocumento->cancelar("Motivo de teste");
 
         $processo=self::$processoTeste;

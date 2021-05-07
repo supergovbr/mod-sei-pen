@@ -14,7 +14,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
     public static $documentoTeste1;
     public static $documentoTeste2;
     public static $documentoTeste3;
-    public static $documentoTeste4;
     public static $protocoloTeste;
 
     /**
@@ -33,7 +32,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
         self::$processoTeste = $this->gerarDadosProcessoTeste(self::$remetente);
         self::$documentoTeste1 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
         self::$documentoTeste2 = $this->gerarDadosDocumentoInternoTeste(self::$remetente);
-        self::$documentoTeste3 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
 
         // Acessar sistema do this->REMETENTE do processo
         $this->acessarSistema(self::$remetente['URL'], self::$remetente['SIGLA_UNIDADE'], self::$remetente['LOGIN'], self::$remetente['SENHA']);
@@ -41,17 +39,16 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
         // Cadastrar novo processo de teste e incluir documentos relacionados
         $this->paginaBase->navegarParaControleProcesso();
         self::$protocoloTeste = $this->cadastrarProcesso(self::$processoTeste);
-        $this->cadastrarDocumentoExterno(self::$documentoTeste1);
+        $this->cadastrarDocumentoExterno(self::$documentoTeste1);     
 
         // Realiza o cancelamento de um documento interno do processo
         $this->cadastrarDocumentoInterno(self::$documentoTeste2);
-        //$this->assinarDocumento(self::$remetente['ORGAO'], self::$remetente['CARGO_ASSINATURA'], self::$remetente['SENHA']);
-        $this->paginaDocumento->navegarParaCancelarDocumento();
-        $this->paginaCancelarDocumento->cancelar("Motivo de teste");
+        $this->assinarDocumento(self::$remetente['ORGAO'], self::$remetente['CARGO_ASSINATURA'], self::$remetente['SENHA']);
 
-        // Realiza o cancelamento de um documento externo do processo
-        $this->cadastrarDocumentoInterno(self::$documentoTeste3);
-        $this->paginaDocumento->navegarParaCancelarDocumento();
+        //Tramitar internamento para liberação da funcionalidade de cancelar
+        $this->tramitarProcessoInternamenteParaCancelamento(self::$remetente['SIGLA_UNIDADE'], self::$remetente['SIGLA_UNIDADE_SECUNDARIA'], self::$processoTeste);
+
+        $this->navegarParaCancelarDocumento(1);
         $this->paginaCancelarDocumento->cancelar("Motivo de teste");
 
         // Trâmitar Externamento processo para órgão/unidade destinatária
@@ -130,10 +127,9 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
 
         // Validação dos dados do processo principal
         $listaDocumentosProcessoPrincipal = $this->paginaProcesso->listarDocumentos();
-        $this->assertEquals(3, count($listaDocumentosProcessoPrincipal));
+        $this->assertEquals(2, count($listaDocumentosProcessoPrincipal));
         $this->validarDadosDocumento($listaDocumentosProcessoPrincipal[0], self::$documentoTeste1, self::$destinatario);
         $this->validarDocumentoCancelado($listaDocumentosProcessoPrincipal[1]);
-        $this->validarDocumentoCancelado($listaDocumentosProcessoPrincipal[2]);
     }
 
 
@@ -152,14 +148,14 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
         self::$destinatario = $this->definirContextoTeste(CONTEXTO_ORGAO_A);
 
         // Definição de dados de teste do processo principal
-        self::$documentoTeste4 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
+        self::$documentoTeste3 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
 
         // Acessar sistema do this->REMETENTE do processo
         $this->acessarSistema(self::$remetente['URL'], self::$remetente['SIGLA_UNIDADE'], self::$remetente['LOGIN'], self::$remetente['SENHA']);
 
         // Incluir novos documentos relacionados
         $this->abrirProcesso(self::$protocoloTeste);
-        $this->cadastrarDocumentoExterno(self::$documentoTeste4);
+        $this->cadastrarDocumentoExterno(self::$documentoTeste3);
 
         // Trâmitar Externamento processo para órgão/unidade destinatária
         $this->tramitarProcessoExternamente(
@@ -233,10 +229,9 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
 
         // Validação dos dados do processo principal
         $listaDocumentosProcesso = $this->paginaProcesso->listarDocumentos();
-        $this->assertEquals(4, count($listaDocumentosProcesso));
+        $this->assertEquals(3, count($listaDocumentosProcesso));
         $this->validarDadosDocumento($listaDocumentosProcesso[0], self::$documentoTeste1, self::$destinatario);
         $this->validarDocumentoCancelado($listaDocumentosProcesso[1]);
-        $this->validarDocumentoCancelado($listaDocumentosProcesso[2]);
-        $this->validarDadosDocumento($listaDocumentosProcesso[3], self::$documentoTeste4, self::$destinatario);
+        $this->validarDadosDocumento($listaDocumentosProcesso[2], self::$documentoTeste3, self::$destinatario);
     }
 }
