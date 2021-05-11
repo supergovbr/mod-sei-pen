@@ -158,7 +158,7 @@ class PaginaProcesso extends PaginaTeste
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
             if($bolDevePossuir){
-                $this->test->byCssSelector("img[src='imagens/anexos.gif'][title='". $nomeDocumentoArvore. "']");
+                $this->test->byLinkText($nomeDocumentoArvore)->using('css selector')->value('div.divArvore > a > img[src="imagens/anexos.gif"][title="'. $nomeDocumentoArvore. '"]');
             }
             return true;
     	}
