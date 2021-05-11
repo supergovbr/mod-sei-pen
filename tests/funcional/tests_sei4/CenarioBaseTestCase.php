@@ -420,13 +420,13 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $this->assertTrue($this->paginaProcesso->ehDocumentoMovido($nomeDocArvore));
     }
 
-    protected function validarDadosDocumento($nomeDocArvore, $dadosDocumento, $destinatario, $unidadeSecundaria=false, $hipoteseLegal=null,$primeiroDocumento=null)
+    protected function validarDadosDocumento($nomeDocArvore, $dadosDocumento, $destinatario, $unidadeSecundaria=false, $hipoteseLegal=null)
     {
         sleep(2);
 
         // Verifica se documento possui marcação de documento anexado
         $bolPossuiDocumentoReferenciado = !is_null($dadosDocumento['ORDEM_DOCUMENTO_REFERENCIADO']);
-        $this->assertTrue($this->paginaProcesso->deveSerDocumentoAnexo($bolPossuiDocumentoReferenciado, $nomeDocArvore,$primeiroDocumento));
+        $this->assertTrue($this->paginaProcesso->deveSerDocumentoAnexo($bolPossuiDocumentoReferenciado, $nomeDocArvore));
 
         $this->paginaProcesso->selecionarDocumento($nomeDocArvore);
         $this->paginaDocumento->navegarParaConsultarDocumento();
@@ -640,8 +640,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $this->assertEquals(count($listaDocumentos), count($documentosTeste));
 
         for ($i=0; $i < count($listaDocumentos); $i++) {
-            if($i==0)$primeiroDocumento=$listaDocumentos[$i];
-            $this->validarDadosDocumento($listaDocumentos[$i], $documentosTeste[$i], $destinatario, $unidadeSecundaria,null,$primeiroDocumento);
+            $this->validarDadosDocumento($listaDocumentos[$i], $documentosTeste[$i], $destinatario, $unidadeSecundaria,null);
         }
     }
 

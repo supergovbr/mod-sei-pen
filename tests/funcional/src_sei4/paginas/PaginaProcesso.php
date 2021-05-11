@@ -151,19 +151,16 @@ class PaginaProcesso extends PaginaTeste
         }
     }
 
-    public function deveSerDocumentoAnexo($bolDevePossuir, $nomeDocumentoArvore,$primeiroDocumento=null)
+    public function deveSerDocumentoAnexo($bolDevePossuir, $nomeDocumentoArvore)
     {
     	try
     	{
             $this->test->frame(null);
             $this->test->frame("ifrArvore");
             if($bolDevePossuir){
-                if($primeiroDocumento!=null) {
-                    $numeracao=substr($primeiroDocumento,-9);
-                    $this->test->byLinkText($nomeDocumentoArvore)->using('css selectoressss')->value('div.divArvore > a2 > img[src="errado"]');
-                    // $this->test->byXPath("//img[contains(@title,'" . $numeracao . "')]");
-                    ////img[contains(@title,"10")]//parent::a//ancestor::a
-                }
+                    $idAnexo=$this->test->byXPath("//span[contains(@title,'" . $nomeDocumentoArvore . "')]")->attribute('id');
+                    $idAnexo=str_replace("span","",$idAnexo);
+                    $this->test->byXPath("//img[contains(@id,'iconMD_PEN_DOC_REF" . $idAnexo . "')]");
             }
             return true;
     	}
