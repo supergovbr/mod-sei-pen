@@ -285,7 +285,7 @@ class PENIntegracao extends SeiIntegracao
                                     $objArvoreAcaoItemAPI->setId('MD_PEN_DOC_REF' . $dblIdDocumento);
                                     $objArvoreAcaoItemAPI->setIdPai($dblIdDocumento);
                                     $objArvoreAcaoItemAPI->setTitle($strTextoInformativo);
-                                    $objArvoreAcaoItemAPI->setIcone('imagens/anexos.gif');
+                                    $objArvoreAcaoItemAPI->setIcone('/infra_css/imagens/anexos.gif');
                                     $objArvoreAcaoItemAPI->setTarget(null);
                                     $objArvoreAcaoItemAPI->setHref("javascript:alert('$strTextoInformativo');");
                                     $objArvoreAcaoItemAPI->setSinHabilitado('S');

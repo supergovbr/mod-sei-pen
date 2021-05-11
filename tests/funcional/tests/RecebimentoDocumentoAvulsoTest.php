@@ -44,6 +44,8 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
         //Verificar recebimento de novo processo administrativo contendo documento avulso enviado
         $this->assertNotNull($novoTramite);
         $this->assertNotNull($reciboTramite);
+        exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
+        exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
         $this->realizarValidacaoRecebimentoDocumentoAvulsoNoDestinatario($documentoTeste, $this->destinatario);
     }
 
