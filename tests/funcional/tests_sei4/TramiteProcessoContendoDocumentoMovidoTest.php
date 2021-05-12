@@ -151,7 +151,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
         // Criar processo secundário para o qual o novo documento será movido
         $processoSecundarioTeste = $this->gerarDadosProcessoTeste(self::$remetente);
         self::$documentoTeste3 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
-        self::$documentoTeste4 = $this->gerarDadosDocumentoExternoTeste(self::$remetente);
+        self::$documentoTeste4 = $this->gerarDadosDocumentoInternoTeste(self::$remetente);
 
         // Acessar sistema do this->REMETENTE do processo
         $this->acessarSistema(self::$remetente['URL'], self::$remetente['SIGLA_UNIDADE'], self::$remetente['LOGIN'], self::$remetente['SENHA']);

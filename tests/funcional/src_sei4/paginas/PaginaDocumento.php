@@ -92,8 +92,7 @@ class PaginaDocumento extends PaginaTeste
     {
         $this->test->frame(null);
         $this->test->frame("ifrVisualizacao");
-        // return $this->test->byXPath("//table[@id='tblAnexos']//tr[2]/td[2]")->text();
-        return $this->test->byXPath("//table[@id='tblAnexos']/tbody/tr/td[2]")->text();
+        return $this->test->byXPath("//table[@id='tblAnexos']/tbody/tr/td[2]/div")->text();
     }
 
     public function adicionarInteressado($arrayNomeInteressado)
