@@ -40,6 +40,7 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
         $novoTramite = $this->enviarMetadadosDocumento($this->servicoPEN, $this->remetente, $this->destinatario, $metadadosDocumentoTeste);
         $this->enviarComponentesDigitaisDoTramite($this->servicoPEN, $novoTramite, $metadadosDocumentoTeste);
         $reciboTramite = $this->receberReciboEnvio($this->servicoPEN, $novoTramite);
+        $this->atualizarTramitesPEN(true,false);
 
         //Verificar recebimento de novo processo administrativo contendo documento avulso enviado
         $this->assertNotNull($novoTramite);
@@ -64,6 +65,7 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
         $novoTramite = $this->enviarMetadadosDocumento($this->servicoPEN, $this->remetente, $this->destinatario, $metadadosDocumentoTeste);
         $this->enviarComponentesDigitaisDoTramite($this->servicoPEN, $novoTramite, $metadadosDocumentoTeste);
         $reciboTramite = $this->receberReciboEnvio($this->servicoPEN, $novoTramite);
+        $this->atualizarTramitesPEN(true,false);
 
         //Verificar recebimento de novo processo administrativo contendo documento avulso enviado
         $this->assertNotNull($novoTramite);

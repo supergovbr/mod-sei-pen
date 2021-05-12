@@ -356,8 +356,6 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $mensagem = utf8_encode($mensagem);
         $this->waitUntil(function($testCase) use ($mensagem, $verificarReciboEnvio, $verificarReciboConclusao) {
             sleep(5);
-            exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
-            exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
             $testCase->refresh();
             $testCase->paginaProcesso->navegarParaConsultarRecibos();
             $this->assertTrue($testCase->paginaReciboTramite->contemTramite($mensagem, $verificarReciboEnvio, $verificarReciboConclusao));
@@ -574,8 +572,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
             // 6 - Verificar se situação atual do processo está como bloqueado
             $this->waitUntil(function($testCase) use (&$orgaosDiferentes){
                 sleep(5);
-                exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
-                exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
+                $this->atualizarTramitesPEN();
                 $testCase->refresh();
                 $paginaProcesso = new PaginaProcesso($testCase);
                 $testCase->assertStringNotContainsString(utf8_encode("Processo em trâmite externo para "), $paginaProcesso->informacao());
@@ -682,5 +679,18 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $this->acessarSistema($destinatario['URL'], $destinatario['SIGLA_UNIDADE'], $destinatario['LOGIN'], $destinatario['SENHA']);
         $this->paginaBase->navegarParaControleProcesso();
         $this->assertFalse($this->paginaControleProcesso->contemProcesso($processoTeste['PROTOCOLO'], false, false));
+    }
+
+    public function atualizarTramitesPEN($bolOrg1=true,$bolOrg2=true,$org2Primeiro=true,$quantidade=1)
+    {
+        for($i=0;$i<$quantidade;$i++){
+            if($org2Primeiro){
+                if($bolOrg2)exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
+                if($bolOrg1)exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+            }else{
+                if($bolOrg1)exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+                if($bolOrg2)exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
+            }
+        }
     }
 }

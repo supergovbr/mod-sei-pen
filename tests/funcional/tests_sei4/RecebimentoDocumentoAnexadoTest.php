@@ -53,7 +53,7 @@ class RecebimentoDocumentoAnexadoTest extends CenarioBaseTestCase
         $novoTramite = $this->enviarMetadadosProcesso(self::$servicoPEN, self::$remetente, self::$destinatario, $processoTeste);
         $this->enviarComponentesDigitaisDoTramite(self::$servicoPEN, $novoTramite, $processoTeste);
         $reciboTramite = $this->receberReciboEnvio(self::$servicoPEN, $novoTramite);
-        exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
+        $this->atualizarTramitesPEN(true,false);
 
         //Verificar recebimento de novo processo administrativo contendo documento avulso enviado
         $this->assertNotNull($novoTramite);
