@@ -8,6 +8,13 @@ class TramiteProcessoContendoDocumentoExternoMesmoOrgaoTest extends CenarioBaseT
     public static $documentoTeste;
     public static $protocoloTeste;
 
+    /**
+     * Teste tramitar processo contendo documento gerado
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
+     *
+     * @return void
+     */
     public function test_tramitar_processo_contendo_documento_gerado()
     {
         // Configuração do dados para teste do cenário

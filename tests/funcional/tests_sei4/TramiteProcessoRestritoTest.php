@@ -12,6 +12,8 @@ class TramiteProcessoRestritoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo com restrição de acesso
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

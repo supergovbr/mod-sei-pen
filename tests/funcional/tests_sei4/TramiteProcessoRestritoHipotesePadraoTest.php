@@ -13,6 +13,8 @@ class TramiteProcessoRestritoHipotesePadraoTest extends CenarioBaseTestCase
      *
      * @group envio
      *
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
+     * 
      * @return void
      */
     public function test_tramitar_processo_restrito_hipotese_nao_mapeada()

@@ -35,6 +35,8 @@ class TramiteProcessoComDevolucaoAlteracaoURLTest extends CenarioBaseTestCase
      *
      * @group envio
      *
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
+     * 
      * @return void
      */
     public function test_tramitar_processo_da_origem()

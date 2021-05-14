@@ -12,6 +12,8 @@ class TramiteProcessoContendoDocumentoExternoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo contendo apenas um documento externo
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

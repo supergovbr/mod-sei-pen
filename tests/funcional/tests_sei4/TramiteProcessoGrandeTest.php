@@ -35,6 +35,8 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

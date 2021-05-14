@@ -20,6 +20,8 @@ class TramiteProcessoAnexadoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo outro anexado
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

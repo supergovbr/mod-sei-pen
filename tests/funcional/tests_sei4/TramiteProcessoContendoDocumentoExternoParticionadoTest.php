@@ -13,6 +13,8 @@ class TramiteProcessoContendoDocumentoExternoParticionadoTest extends CenarioBas
      *
      * @group envio
      * @group large
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

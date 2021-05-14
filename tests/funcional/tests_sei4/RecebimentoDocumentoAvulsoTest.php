@@ -15,6 +15,13 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
     protected $destinatario;
     protected $servicoPEN;
 
+    /**
+     * Teste de recebimento dedocumento avulso com 2 componentes digitais
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
+     *
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setup();

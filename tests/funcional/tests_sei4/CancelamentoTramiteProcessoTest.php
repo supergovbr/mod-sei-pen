@@ -12,6 +12,8 @@ class CancelamentoTramiteProcessoTest extends CenarioBaseTestCase
      * Teste de cancelamento de trâmite com processo contendo documento gerado (interno)
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

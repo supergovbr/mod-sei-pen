@@ -12,6 +12,8 @@ class TramiteProcessoExtensaoNaoMapeadoDestinoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo contendo extensão não mapeada no destino
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

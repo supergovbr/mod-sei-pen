@@ -28,6 +28,8 @@ class TramiteProcessoComDevolucaoAnexadoOutroTest extends CenarioBaseTestCase
      * Posteriormente os dois serão anexados e enviados de volta
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

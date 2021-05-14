@@ -26,6 +26,8 @@ class TramiteProcessoDocumentoNaoMapeadoDestinoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo contendo documento não mapeado no destino
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

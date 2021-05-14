@@ -28,6 +28,8 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo contendo documento com tamanho acima do limite no destinatario
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

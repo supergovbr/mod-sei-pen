@@ -21,6 +21,8 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo um documento movido
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

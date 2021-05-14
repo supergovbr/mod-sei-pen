@@ -25,6 +25,8 @@ class TramiteProcessoComDevolucaoContendoOutroAnexadoTest extends CenarioBaseTes
      * Teste inicial de trâmite de um processo simples para outro orgão
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

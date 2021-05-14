@@ -20,6 +20,8 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo um documento cancelado
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

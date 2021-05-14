@@ -14,6 +14,8 @@ class TramiteProcessoContendoDocumentoBeSimpleCorrompidoTest extends CenarioBase
      *
      * @group envio
      * @large
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

@@ -12,6 +12,8 @@ class TramiteProcessoComDocumentoRestritoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo com documentos restritos
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

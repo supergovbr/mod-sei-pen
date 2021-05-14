@@ -22,6 +22,8 @@ class TramiteProcessoValidacaoEnvioTest extends CenarioBaseTestCase
      * Teste de trâmite externo com processo não contendo nenhum documento cadastrado
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

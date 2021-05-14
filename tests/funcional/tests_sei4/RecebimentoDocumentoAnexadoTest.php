@@ -25,6 +25,8 @@ class RecebimentoDocumentoAnexadoTest extends CenarioBaseTestCase
      * Teste de envio de metadados do processo contendo documentos anexados
      *
      * Inicialmente são enviados 3 documentos, sendo um deles referênciado pelos outros dois documentos
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */

@@ -13,6 +13,8 @@ class TramiteProcessoContendoDocumentoInternoExternoTest extends CenarioBaseTest
      * Teste de trâmite externo de processo contendo um documento interno e outro externo
      *
      * @group envio
+     * 
+     * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void
      */
