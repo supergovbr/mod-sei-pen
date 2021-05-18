@@ -40,6 +40,31 @@ services:
       - ./assets/arquivos/test_files_index.txt:/test_files_index.txt
       - /tmp:/tmp
 
+  php-test-functional:
+    image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
+    container_name: php-test-functional
+    depends_on: 
+      - org1-database
+      - org2-database
+      - selenium
+    dns: "8.8.8.8"
+    volumes:
+      - ${SEI_PATH}:/opt
+      - .:/tests
+      - ./assets/config/xdebug.ini:/etc/php.d/xdebug.ini
+    environment:
+      - XDEBUG_CONFIG="idekey=default remote_enable=1 remote_mode=req remote_port=9000 remote_host=${HOST_IP} remote_connect_back=1"
+      - XDEBUG_SESSION=default
+      - XDEBUG_MODE=debug    
+    extra_hosts:
+      - "${ORG1_HOSTNAME}:127.0.0.1"
+    links:   
+      - org1-database:${ORG1_DATABASE_HOST}
+      - org2-database:${ORG1_DATABASE_HOST}
+      - selenium:selenium
+    command: "true"  
+    
+
 
 ### CONTAINERS DO AMBIENTE DO ÓRGÃO 1 ###
 

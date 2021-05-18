@@ -83,7 +83,8 @@ test-environment-provision:
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org2-http chmod 0644 /etc/cron.d/sip
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org2-http php /opt/sei/scripts/mod-pen/sei_atualizar_versao_modulo_pen.php
 	docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 exec org2-http php /opt/sip/scripts/mod-pen/sip_atualizar_versao_modulo_pen.php
-	wget -nc -i $(PEN_TEST_FUNC)/assets/arquivos/test_files_index.txt -P /tmp
+	wget -nc -i $(PEN_TEST_FUNC)/assets/arquivos/test_files_index.txt -P $(PEN_TEST_FUNC)/.tmp
+	cp $(PEN_TEST_FUNC)/.tmp/* /tmp
 	composer install -d $(PEN_TEST_FUNC)
 	composer install -d $(PEN_TEST_UNIT)
 
@@ -107,10 +108,18 @@ test-environment-down:
 test-functional:
 	$(PEN_TEST_FUNC)/vendor/phpunit/phpunit/phpunit -c $(PEN_TEST_FUNC)/phpunit.xml --stop-on-failure  --testsuite funcional
 
+test-functional-internal:	
+	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run php-test-functional /tests/vendor/phpunit/phpunit/phpunit -c /tests/phpunit.xml --stop-on-failure  --testsuite funcional
 
 test-functional-parallel:
 	$(PEN_TEST_FUNC)/vendor/bin/paratest -c $(PEN_TEST_FUNC)/phpunit.xml --bootstrap $(PEN_TEST_FUNC)/bootstrap.php --testsuite funcional -p 4
 	  
+test-functional-parallel-internal:
+	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run --rm php-test-functional /tests/vendor/bin/paratest -c /tests/phpunit.xml --bootstrap /tests/bootstrap.php --testsuite funcional -p 4
+
+test-parallel-otimizado:
+	make -j2 test-functional-parallel tramitar-pendencias-silent
+	
 	
 test-unit:
 	php -c php.ini $(PEN_TEST_UNIT)/vendor/phpunit/phpunit/phpunit -c $(PEN_TEST_UNIT)/phpunit.xml $(PEN_TEST_UNIT)/rn/ProcessoEletronicoRNTest.php 
@@ -136,8 +145,16 @@ deletarHttpProxy:
 tramitar-pendencias:
 	i=1; while [ "$$i" -le 2 ]; do \
     	echo "Executando $$i"; \
-		sudo docker exec -it org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
-		sudo docker exec -it org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
+		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
+		i=$$((i + 1));\
+  	done
+
+tramitar-pendencias-silent:
+	i=1; while [ "$$i" -le 400 ]; do \
+    	echo "Executando $$i" >/dev/null 2>&1; \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1; \
+		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1; \
 		i=$$((i + 1));\
   	done
 

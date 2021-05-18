@@ -267,6 +267,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
             try{
                 $mensagemAlerta = $this->paginaTramitar->alertTextAndClose(true);
             } catch(Exception $e){}
+            
             if($mensagemAlerta){
                 throw new Exception($mensagemAlerta);
             }

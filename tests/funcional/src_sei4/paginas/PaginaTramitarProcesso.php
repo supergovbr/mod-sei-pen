@@ -27,11 +27,17 @@ class PaginaTramitarProcesso extends PaginaTeste
         $this->unidadeInput->value($nomeUnidade);
         $this->test->keys(Keys::ENTER);
         $this->test->waitUntil(function($testCase) use($hierarquia) {
+            $bolExisteAlerta=null;
             $nomeUnidade = $testCase->byId('txtUnidade')->value();
             if(!empty($hierarquia)){
                 $nomeUnidade .= ' - ' . $hierarquia;
             }
 
+            try{
+                $bolExisteAlerta=$this->alertTextAndClose();
+                if($bolExisteAlerta!=null)$this->test->keys(Keys::ENTER);
+            }catch(Exception $e){
+            }
             $testCase->byPartialLinkText($nomeUnidade)->click();
             return true;
         }, PEN_WAIT_TIMEOUT);
@@ -66,8 +72,14 @@ class PaginaTramitarProcesso extends PaginaTeste
         $this->unidadeInput->value($nomeUnidade);
         //$this->test->keys(Keys::ENTER);
         $this->test->waitUntil(function($testCase) use($nomeUnidade) {
+            $bolExisteAlerta=null;
             $nomeUnidade = $testCase->byId('txtUnidade')->value();
             sleep(1);
+            try{
+                $bolExisteAlerta=$this->alertTextAndClose();
+                if($bolExisteAlerta!=null)$this->test->keys(Keys::ENTER);
+            }catch(Exception $e){
+            }
             $testCase->byPartialLinkText($nomeUnidade)->click();
             return true;
         }, PEN_WAIT_TIMEOUT);
@@ -80,5 +92,18 @@ class PaginaTramitarProcesso extends PaginaTeste
     {
         $tramitarButton = $this->test->byXPath("//button[@value='Enviar']");
         $tramitarButton->click();
-    }    
+    }   
+
+    public function alertTextAndClose($confirm=true)
+    {
+        sleep(2);
+        $result = $this->test->alertText();
+        $result = (!is_array($result) ? $result : null);
+
+        if(isset($confirm) && $confirm)
+            $this->test->acceptAlert();
+        else
+            $this->dismissAlert();
+        return $result;
+    } 
 }
