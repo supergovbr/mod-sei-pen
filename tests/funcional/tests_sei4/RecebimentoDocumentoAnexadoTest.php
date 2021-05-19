@@ -26,6 +26,8 @@ class RecebimentoDocumentoAnexadoTest extends CenarioBaseTestCase
      *
      * Inicialmente são enviados 3 documentos, sendo um deles referênciado pelos outros dois documentos
      * 
+     * @group envio
+     * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
      * @return void

@@ -8,6 +8,13 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
     public static $documentoTeste;
     public static $protocoloTeste;
 
+
+    /**
+     * 
+     * @Depends TramiteProcessoGrandeTest::tearDownAfterClass
+     *
+     * @return void
+     */
     function setUp(): void
     {
         parent::setUp();

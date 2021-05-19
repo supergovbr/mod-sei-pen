@@ -158,7 +158,7 @@ class TramiteProcessoAnexadoComDevolucaoTest extends CenarioBaseTestCase
      *
      * @group envio
      *
-     * @depends test_verificar_origem_processo_anexado
+     * @depends test_verificar_destino_processo_anexado
      *
      * @return void
      */

@@ -37,6 +37,13 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
     }
 
 
+    /**
+     * Teste de recebimento documento avulso com 2 componentes digitais
+     *
+     * @group verificacao_recebimento
+     *
+     * @return void
+     */
     public function test_recebimento_documento_avulso_com_2_componentes_digitais()
     {
         // Simular um trâmite chamando a API do Barramento diretamente
@@ -60,6 +67,8 @@ class RecebimentoDocumentoAvulsoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do documento avulso
      *
      * @group verificacao_recebimento
+     * 
+     * @depends test_recebimento_documento_avulso_com_2_componentes_digitais
      *
      * @return void
      */
