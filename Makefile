@@ -108,14 +108,18 @@ test-environment-down:
 test-functional:
 	$(PEN_TEST_FUNC)/vendor/phpunit/phpunit/phpunit -c $(PEN_TEST_FUNC)/phpunit.xml --stop-on-failure  --testsuite funcional
 
+
 test-functional-internal:	
 	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run php-test-functional /tests/vendor/phpunit/phpunit/phpunit -c /tests/phpunit.xml --stop-on-failure  --testsuite funcional
+
 
 test-functional-parallel:
 	$(PEN_TEST_FUNC)/vendor/bin/paratest -c $(PEN_TEST_FUNC)/phpunit.xml --bootstrap $(PEN_TEST_FUNC)/bootstrap.php --testsuite funcional -p 4
 	  
+
 test-functional-parallel-internal:
 	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run --rm php-test-functional /tests/vendor/bin/paratest -c /tests/phpunit.xml --bootstrap /tests/bootstrap.php --testsuite funcional -p 4
+
 
 test-parallel-otimizado:
 	make -j2 test-functional-parallel tramitar-pendencias-silent
