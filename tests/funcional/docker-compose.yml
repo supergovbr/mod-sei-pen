@@ -43,13 +43,16 @@ services:
   php-test-functional:
     image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
     container_name: php-test-functional
+    restart: always
     depends_on: 
       - org1-database
       - org2-database
       - selenium
     dns: "8.8.8.8"
     volumes:
-      - ${SEI_PATH}:/opt
+      - ${SEI_PATH}/sei:/opt/sei
+      - ${SEI_PATH}/sip:/opt/sip
+      - ${SEI_PATH}/infra:/opt/infra
       - .:/tests
       - ./assets/config/xdebug.ini:/etc/php.d/xdebug.ini
       - /tmp:/tmp
@@ -72,17 +75,23 @@ services:
   org1-database:
     image: ${ORG1_DATABASE_IMAGE}:${ENVIRONMENT_VERSION}
     container_name: org1-${ORG1_DATABASE_HOST}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssword
     ports:
       - "${ORG1_DATABASE_HOST_PORT}:${ORG1_DATABASE_GUEST_PORT}"
       
   org1-http:
     image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
     container_name: org1-http
+    restart: always
     depends_on: 
       - org1-database
     dns: "8.8.8.8"
     volumes:
-      - ${SEI_PATH}:/opt
+      - ${SEI_PATH}/sei:/opt/sei
+      - ${SEI_PATH}/sip:/opt/sip
+      - ${SEI_PATH}/infra:/opt/infra
       - ./assets/cron.d:/etc/cron.d      
       - ./assets/config:/opt/sei/config/mod-pen
       - ../../src/scripts:/opt/sei/scripts/mod-pen
@@ -93,6 +102,7 @@ services:
       - ${SIP_CONFIG}:/opt/sip/config/ConfiguracaoSip.php:ro
       - ./assets/config/xdebug.ini:/etc/php.d/xdebug.ini
     environment:
+      - LANG=pt_BR.ISO-8859-1
       - HOST_URL=http://${ORG1_HOSTNAME}:${ORG1_PORT}
       - CERTIFICADO=${ORG1_CERTIFICADO}
       - CERTIFICADO_SENHA=${ORG1_CERTIFICADO_SENHA}
@@ -132,17 +142,23 @@ services:
   org2-database:
     image: ${ORG2_DATABASE_IMAGE}:${ENVIRONMENT_VERSION}
     container_name: org2-${ORG2_DATABASE_HOST}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssword
     ports:
       - "${ORG2_DATABASE_HOST_PORT}:${ORG2_DATABASE_GUEST_PORT}"
     
   org2-http:
     image: processoeletronico/vagrant_sei4_httpd:${ENVIRONMENT_VERSION}
     container_name: org2-http
+    restart: always
     depends_on: 
       - org2-database
     dns: "8.8.8.8"
     volumes:
-      - ${SEI_PATH}:/opt
+      - ${SEI_PATH}/sei:/opt/sei
+      - ${SEI_PATH}/sip:/opt/sip
+      - ${SEI_PATH}/infra:/opt/infra
       - ./assets/cron.d:/etc/cron.d      
       - ./assets/config:/opt/sei/config/mod-pen
       - ../../src/scripts:/opt/sei/scripts/mod-pen
@@ -153,6 +169,7 @@ services:
       - ${SIP_CONFIG}:/opt/sip/config/ConfiguracaoSip.php:ro
       - ./assets/config/xdebug.ini:/etc/php.d/xdebug.ini
     environment:
+      - LANG=pt_BR.ISO-8859-1
       - HOST_URL=http://${ORG2_HOSTNAME}:${ORG2_PORT}
       - CERTIFICADO=${ORG2_CERTIFICADO}
       - CERTIFICADO_SENHA=${ORG2_CERTIFICADO_SENHA}
