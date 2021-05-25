@@ -167,4 +167,5 @@ tramitar-pendencias-silent:
 # rodar como:
 # make teste=TramiteProcessoComDevolucaoTest run-test-xdebug
 run-test-xdebug:
-	$(PEN_TEST_FUNC)/vendor/phpunit/phpunit/phpunit -c $(PEN_TEST_FUNC)/phpunit.xml --stop-on-failure $(PEN_TEST_FUNC)/tests_sei4/$(addsuffix .php,$(teste))
+	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run --rm php-test-functional /tests/vendor/phpunit/phpunit/phpunit -c /tests/phpunit.xml --stop-on-failure /tests/tests_sei4/$(addsuffix .php,$(teste))
+	
