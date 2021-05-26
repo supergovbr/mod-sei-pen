@@ -60,7 +60,7 @@ services:
       - XDEBUG_CONFIG="idekey=default remote_enable=1 remote_mode=req remote_port=9000 remote_host=${HOST_IP} remote_connect_back=1"
       - XDEBUG_SESSION=default
       - XDEBUG_MODE=debug    
-      - CONTEXTO_ORGAO_A_DB_SEI_DSN=${CONTEXTO_ORGAO_B_DB_SEI_DSN}
+      - CONTEXTO_ORGAO_A_DB_SEI_DSN=${CONTEXTO_ORGAO_A_DB_SEI_DSN}
       - CONTEXTO_ORGAO_B_DB_SEI_DSN=${CONTEXTO_ORGAO_B_DB_SEI_DSN}
       - SEI_DATABASE_USER=${SEI_DATABASE_USER}
       - SEI_DATABASE_PASSWORD=${SEI_DATABASE_PASSWORD}

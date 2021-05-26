@@ -147,9 +147,11 @@ deletarHttpProxy:
 	sudo docker container rm proxy org1-http org2-http
 
 tramitar-pendencias:
-	i=1; while [ "$$i" -le 2 ]; do \
+	i=1; while [ "$$i" -le 400 ]; do \
     	echo "Executando $$i"; \
-		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php & \
+		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php & \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php & \
 		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php; \
 		i=$$((i + 1));\
   	done
@@ -157,7 +159,9 @@ tramitar-pendencias:
 tramitar-pendencias-silent:
 	i=1; while [ "$$i" -le 400 ]; do \
     	echo "Executando $$i" >/dev/null 2>&1; \
-		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1; \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1 & \
+		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1 & \
+		sudo docker exec org1-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1 & \
 		sudo docker exec org2-http php /opt/sei/scripts/mod-pen/MonitoramentoTarefasPEN.php >/dev/null 2>&1; \
 		i=$$((i + 1));\
   	done
@@ -165,7 +169,7 @@ tramitar-pendencias-silent:
 # criar a variavel de ambiente no shell: 
 # export XDEBUG_CONFIG='idekey=default remote_enable=1 remote_mode=req remote_port=9003 remote_host=127.0.0.1 remote_connect_back=1'
 # rodar como:
-# make teste=TramiteProcessoComDevolucaoTest run-test-xdebug
+# make teste=TramiteProcessoRestritoTest run-test-xdebug
 run-test-xdebug:
 	export HOST_IP=$(HOST_IP); docker-compose -f $(PEN_TEST_FUNC)/docker-compose.yml --env-file $(PEN_TEST_FUNC)/.env_sei4 run --rm php-test-functional /tests/vendor/phpunit/phpunit/phpunit -c /tests/phpunit.xml --stop-on-failure /tests/tests_sei4/$(addsuffix .php,$(teste))
 	
