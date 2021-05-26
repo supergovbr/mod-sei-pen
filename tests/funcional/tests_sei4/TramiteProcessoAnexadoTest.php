@@ -20,6 +20,7 @@ class TramiteProcessoAnexadoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo outro anexado
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -74,6 +75,7 @@ class TramiteProcessoAnexadoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo anexado no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_tramitar_processo_anexado_da_origem
      *
@@ -109,6 +111,7 @@ class TramiteProcessoAnexadoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo anexado no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_origem_processo_anexado
      *

@@ -83,6 +83,8 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $bancoOrgaoA->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?)", array(1, 3, 3, 'E', 'S'));
         $bancoOrgaoA->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?)", array(2, 4, 4, 'E', 'S'));
         $bancoOrgaoA->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?)", array(3, 3, 3, 'R', 'S'));
+  
+        $bancoOrgaoA->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
 
         // Habilitação da extensão docx
         $bancoOrgaoA->execute("update arquivo_extensao set sin_ativo=? where extensao=?", array('S', 'docx'));
@@ -108,6 +110,8 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $bancoOrgaoB->execute("delete from md_pen_rel_doc_map_recebido where id_serie = ?", array($serieNaoMapeadaOrigem[0]["ID_SERIE"]));
         $bancoOrgaoB->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?);", array(4, 3, 3, 'E', 'S'));
         $bancoOrgaoB->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?);", array(5, 3, 3, 'R', 'S'));
+
+        $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
     }
 
     public static function tearDownAfterClass(): void
@@ -683,7 +687,7 @@ class CenarioBaseTestCase extends Selenium2TestCase
 
     public function atualizarTramitesPEN($bolOrg1=true,$bolOrg2=true,$org2Primeiro=true,$quantidade=1)
     {
-        for($i=0;$i<$quantidade;$i++){
+        /*for($i=0;$i<$quantidade;$i++){
             if($org2Primeiro){
                 if($bolOrg2)exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
                 if($bolOrg1)exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
@@ -691,6 +695,6 @@ class CenarioBaseTestCase extends Selenium2TestCase
                 if($bolOrg1)exec(PEN_SCRIPT_MONITORAMENTO_ORG1);
                 if($bolOrg2)exec(PEN_SCRIPT_MONITORAMENTO_ORG2);
             }
-        }
+        }*/
     }
 }

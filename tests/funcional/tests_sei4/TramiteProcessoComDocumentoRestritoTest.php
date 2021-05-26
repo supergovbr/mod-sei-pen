@@ -12,6 +12,7 @@ class TramiteProcessoComDocumentoRestritoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo com documentos restritos
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -52,6 +53,7 @@ class TramiteProcessoComDocumentoRestritoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_tramitar_processo_com_documento_restrito
      *
@@ -94,6 +96,7 @@ class TramiteProcessoComDocumentoRestritoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo contendo apenas um documento interno (gerado)
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_origem_processo_com_documento_restrito
      *

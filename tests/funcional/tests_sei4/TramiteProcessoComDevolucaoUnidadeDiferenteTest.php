@@ -15,6 +15,7 @@ class TramiteProcessoComDevolucaoUnidadeDiferenteTest extends CenarioBaseTestCas
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -39,6 +40,7 @@ class TramiteProcessoComDevolucaoUnidadeDiferenteTest extends CenarioBaseTestCas
      * Teste de verificação do correto recebimento do processo no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_tramitar_processo_da_origem
      *
@@ -55,6 +57,7 @@ class TramiteProcessoComDevolucaoUnidadeDiferenteTest extends CenarioBaseTestCas
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
      * @group envio
+     * @large
      *
      * @depends test_verificar_destino_processo_para_devolucao
      *
@@ -82,6 +85,7 @@ class TramiteProcessoComDevolucaoUnidadeDiferenteTest extends CenarioBaseTestCas
      * Teste de verificação do correto recebimento do processo no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_devolucao_processo_para_origem
      *

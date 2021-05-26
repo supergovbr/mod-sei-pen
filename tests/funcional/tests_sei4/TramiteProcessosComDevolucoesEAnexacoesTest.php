@@ -33,6 +33,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de processo apartado para o órgão B
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -58,6 +59,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo simples no órgão B
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_tramitar_processo_simples_para_orgaoB
      *
@@ -74,6 +76,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo realizando a devolução para a mesma unidade de origem
      *
      * @group envio
+     * @large
      *
      * @depends test_verificar_recebimento_processo_simples_destino
      *
@@ -97,6 +100,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação da correta devolução do processo simples para o órgão A
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_devolucao_processo_simples_para_origem
      *
@@ -114,6 +118,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de trâmite de processos contendo o processo simples anexado à outro
      *
      * @group envio
+     * @large
      *
      * @depends test_verificar_devolucao_processo_simples_origem
      *
@@ -158,6 +163,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo anexado no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_tramitar_processo_anexado_para_orgaoB
      *
@@ -193,6 +199,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo anexado no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_origem_processo_anexado
      *
@@ -240,6 +247,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo realizando nova devolução para a mesma unidade de origem
      *
      * @group envio
+     * @large
      *
      * @depends test_verificar_destino_processo_anexado
      *
@@ -278,6 +286,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo anexado no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_devolucao_processo_para_origem
      *
@@ -311,6 +320,7 @@ class TramiteProcessosComDevolucoesEAnexacoesTest extends CenarioBaseTestCase
      * Teste de verificação da correta devolução do processo anexado no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_devolucao_origem_processo_anexado
      *
