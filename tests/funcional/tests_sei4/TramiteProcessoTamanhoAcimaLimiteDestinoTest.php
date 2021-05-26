@@ -15,27 +15,26 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass() :void {
-
+    function setUp(): void
+    {
+        parent::setUp();
         // Redução de limite máximo de tamanho de documento externo
         $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);
         $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(2, 'SEI_TAM_MB_DOC_EXTERNO'));
+    }
 
-    }      
-        
-    public static function tearDownAfterClass() :void {
-
+    function tearDown(): void
+    {
+        parent::tearDown();
         // Ajuste do tamanho máximo de arquivo externo permitido para padrão
         $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);
-        $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
-
-    }   
+        $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(200, 'SEI_TAM_MB_DOC_EXTERNO'));
+    }
 
     /**
      * Teste de trâmite externo de processo contendo documento com tamanho acima do limite no destinatario
      *
      * @group envio
-     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -47,7 +46,7 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
         self::$remetente = $this->definirContextoTeste(CONTEXTO_ORGAO_A);
         self::$destinatario = $this->definirContextoTeste(CONTEXTO_ORGAO_B);
         self::$processoTeste = $this->gerarDadosProcessoTeste(self::$remetente);
-        self::$documentoTeste = $this->gerarDadosDocumentoExternoTeste(self::$remetente, 'arquivo_003.pdf');
+        self::$documentoTeste = $this->gerarDadosDocumentoExternoTeste(self::$remetente, 'arquivo_060.pdf');
 
         $this->acessarSistema(self::$remetente['URL'], self::$remetente['SIGLA_UNIDADE'], self::$remetente['LOGIN'], self::$remetente['SENHA']);
         self::$protocoloTeste = $this->cadastrarProcesso(self::$processoTeste);
@@ -62,7 +61,6 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
-     * @large
      *
      * @depends test_tramitar_processo_tamanho_acima_limite_destino
      *
@@ -107,7 +105,6 @@ class TramiteProcessoTamanhoAcimaLimiteDestinoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo contendo apenas um documento interno (gerado)
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_verificar_origem_processo_tamanho_acima_limite_destino
      *

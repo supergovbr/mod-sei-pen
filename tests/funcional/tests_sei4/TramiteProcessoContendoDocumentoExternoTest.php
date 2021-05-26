@@ -12,7 +12,6 @@ class TramiteProcessoContendoDocumentoExternoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo contendo apenas um documento externo
      *
      * @group envio
-     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -46,7 +45,6 @@ class TramiteProcessoContendoDocumentoExternoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
-     * @large
      *
      * @depends test_tramitar_processo_contendo_documento_externo
      *
@@ -89,7 +87,6 @@ class TramiteProcessoContendoDocumentoExternoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo contendo apenas um documento interno (gerado)
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_verificar_origem_processo_contendo_documento_externo
      *

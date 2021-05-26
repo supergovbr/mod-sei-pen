@@ -14,7 +14,7 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
     public static function setUpBeforeClass() :void {
 
         $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);    
-        $bancoOrgaoA->execute("update infra_parametro set valor = ? where nome = ?", array(120, 'SEI_TAM_MB_DOC_EXTERNO'));
+        $bancoOrgaoA->execute("update infra_parametro set valor = ? where nome = ?", array(120, 'SEI_TAM_MB_DOC_EXTERNO'));        
 
         $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);    
         $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(120, 'SEI_TAM_MB_DOC_EXTERNO'));
@@ -29,13 +29,12 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
         $bancoOrgaoB = new DatabaseUtils(CONTEXTO_ORGAO_B);    
         $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
 
-    }
+    }   
 
     /**
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
      * @group envio
-     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -60,7 +59,6 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo no destinatário
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_tramitar_processo_da_origem
      *
@@ -77,7 +75,6 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo com devolução para a mesma unidade de origem
      *
      * @group envio
-     * @large
      *
      * @depends test_verificar_destino_processo_para_devolucao
      *
@@ -100,7 +97,6 @@ class TramiteProcessoGrandeTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo no destinatário
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_devolucao_processo_para_origem
      *

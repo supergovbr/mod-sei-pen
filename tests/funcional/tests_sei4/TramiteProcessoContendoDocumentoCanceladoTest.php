@@ -20,7 +20,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo um documento cancelado
      *
      * @group envio
-     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -69,7 +68,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
-     * @large
      *
      * @depends test_tramitar_processo_contendo_documento_cancelado
      *
@@ -103,7 +101,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo com documento cancelado no destinatário
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_verificar_origem_processo
      *
@@ -141,7 +138,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo realizando a devolução para a mesma unidade de origem
      *
      * @group envio
-     * @large
      *
      * @depends test_verificar_destino_processo
      *
@@ -177,7 +173,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
-     * @large
      *
      * @depends test_devolucao_processo_para_origem
      *
@@ -212,7 +207,6 @@ class TramiteProcessoContendoDocumentoCanceladoTest extends CenarioBaseTestCase
      * Teste de verificação da correta devolução do processo no destinatário
      *
      * @group verificacao_recebimento
-     * @large
      *
      * @depends test_verificar_devolucao_origem_processo
      *
