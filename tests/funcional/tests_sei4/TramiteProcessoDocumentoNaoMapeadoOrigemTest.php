@@ -8,19 +8,19 @@ class TramiteProcessoDocumentoNaoMapeadoOrigemTest extends CenarioBaseTestCase
     public static $documentoTeste;
     public static $protocoloTeste;
 
-    function setUp(): void
-    {
-        parent::setUp();
+    public static function setUpBeforeClass() :void {
+
         $parametrosOrgaoA = new ParameterUtils(CONTEXTO_ORGAO_A);
         $parametrosOrgaoA->setParameter('PEN_ESPECIE_DOCUMENTAL_PADRAO_ENVIO', null);
-    }
 
-    function tearDown(): void
-    {
-        parent::tearDown();
+    }      
+        
+    public static function tearDownAfterClass() :void {
+
         $parametrosOrgaoA = new ParameterUtils(CONTEXTO_ORGAO_A);
         $parametrosOrgaoA->setParameter('PEN_ESPECIE_DOCUMENTAL_PADRAO_ENVIO', 999);
-    }
+
+    }    
 
     /**
      * Teste de trâmite externo de processo contendo um documento interno com espécie documental não mapeada
