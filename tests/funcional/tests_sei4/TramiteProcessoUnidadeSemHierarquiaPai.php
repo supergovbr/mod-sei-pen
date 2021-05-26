@@ -12,6 +12,7 @@ class TramiteProcessoUnidadeSemHierarquiaPaiTest extends CenarioBaseTestCase
      * Teste de trâmite externo de processo sem devolução para testar caso de hierarquia sem pai
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *

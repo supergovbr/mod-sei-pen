@@ -21,6 +21,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste inicial de trâmite de um processo contendo um documento movido
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -69,6 +70,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_tramitar_processo_contendo_documento_movido
      *
@@ -102,6 +104,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste de verificação do correto recebimento do processo com documento movido no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_origem_processo
      *
@@ -140,6 +143,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * mais dois documentos, sendo um deles movido
      *
      * @group envio
+     * @large
      *
      * @depends test_verificar_destino_processo_com_documento_movido
      *
@@ -185,6 +189,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_devolucao_processo_para_origem_com_novo_documento_movido
      *
@@ -219,6 +224,7 @@ class TramiteProcessoContendoDocumentoMovidoTest extends CenarioBaseTestCase
      * Teste de verificação da correta devolução do processo no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_devolucao_origem_processo
      *

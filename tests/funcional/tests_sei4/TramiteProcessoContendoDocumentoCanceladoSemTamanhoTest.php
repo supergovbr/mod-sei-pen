@@ -18,6 +18,7 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
      * Teste inicial de trâmite de um processo contendo um documento cancelado
      *
      * @group envio
+     * @large
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
      *
@@ -74,6 +75,7 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
      * Teste de verificação do correto envio do processo no sistema remetente
      *
      * @group verificacao_envio
+     * @large
      *
      * @depends test_tramitar_processo_contendo_documento_cancelado
      *
@@ -107,6 +109,7 @@ class TramiteProcessoContendoDocumentoCanceladoSemTamanhoTest extends CenarioBas
      * Teste de verificação do correto recebimento do processo com documento cancelado no destinatário
      *
      * @group verificacao_recebimento
+     * @large
      *
      * @depends test_verificar_origem_processo
      *

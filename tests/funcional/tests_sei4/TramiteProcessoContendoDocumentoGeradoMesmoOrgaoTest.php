@@ -12,6 +12,7 @@ class TramiteProcessoContendoDocumentoGeradoMesmoOrgaoTest extends CenarioBaseTe
      * Test tramitar processo contendo documento gerado
      * 
      * @Depends CenarioBaseTestCase::setUpBeforeClass
+     * @large
      *
      * @return void
      */
@@ -34,6 +35,7 @@ class TramiteProcessoContendoDocumentoGeradoMesmoOrgaoTest extends CenarioBaseTe
 
     /**
      * @depends test_tramitar_processo_contendo_documento_gerado
+     * @large
      */
     public function test_verificar_origem_processo_contendo_documento_gerado()
     {
@@ -70,6 +72,7 @@ class TramiteProcessoContendoDocumentoGeradoMesmoOrgaoTest extends CenarioBaseTe
 
     /**
      * @depends test_verificar_origem_processo_contendo_documento_gerado
+     * @large
      */
     public function test_verificar_destino_processo_contendo_documento_gerado()
     {
