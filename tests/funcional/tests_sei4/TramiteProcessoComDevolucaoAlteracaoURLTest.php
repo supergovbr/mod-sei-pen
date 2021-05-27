@@ -23,10 +23,10 @@ class TramiteProcessoComDevolucaoAlteracaoURLTest extends CenarioBaseTestCase
 
         $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);        
         $result=$bancoOrgaoA->query("SELECT texto FROM tarja_assinatura where sta_tarja_assinatura=? and sin_ativo=?", array("V","S"));
-        if (array_key_exists("texto", $result[0])) {
+        if ($bancoOrgaoA->getBdType()!="oci") {
             $strTarja=$result[0]["texto"];
         }else{
-            $strTarja=$result[0]["TEXTO"];
+            $strTarja=stream_get_contents($result[0]["TEXTO"]);
         }
         $strTarja = str_replace($arrControleURL['novo'],$arrControleURL['antigo'], $strTarja);
         $bancoOrgaoA->execute("update tarja_assinatura set texto=? where sta_tarja_assinatura=? and sin_ativo=?", array($strTarja,"V","S"));
@@ -134,11 +134,11 @@ class TramiteProcessoComDevolucaoAlteracaoURLTest extends CenarioBaseTestCase
         self::$documentoTeste5 = $this->gerarDadosDocumentoInternoTeste(self::$remetente);
 
         $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);        
-        $result=$bancoOrgaoA->query("SELECT texto FROM sei.tarja_assinatura where sta_tarja_assinatura=? and sin_ativo=?", array("V","S"));
-        if (array_key_exists("texto", $result[0])) {
+        $result=$bancoOrgaoA->query("SELECT texto FROM tarja_assinatura where sta_tarja_assinatura=? and sin_ativo=?", array("V","S"));
+        if ($bancoOrgaoA->getBdType()!="oci") {
             $strTarja=$result[0]["texto"];
         }else{
-            $strTarja=$result[0]["TEXTO"];
+            $strTarja=stream_get_contents($result[0]["TEXTO"]);
         }
 
         $arrControleURL=[
@@ -147,7 +147,7 @@ class TramiteProcessoComDevolucaoAlteracaoURLTest extends CenarioBaseTestCase
         ];
 
         $strTarja = str_replace($arrControleURL['antigo'],$arrControleURL['novo'], $strTarja);
-        $bancoOrgaoA->execute("update sei.tarja_assinatura set texto=? where sta_tarja_assinatura=? and sin_ativo=?", array($strTarja,"V","S"));
+        $bancoOrgaoA->execute("update tarja_assinatura set texto=? where sta_tarja_assinatura=? and sin_ativo=?", array($strTarja,"V","S"));
 
         $documentos = array(self::$documentoTeste5);
         $this->realizarTramiteExternoComValidacaoNoRemetente(self::$processoTeste, $documentos, self::$remetente, self::$destinatario);

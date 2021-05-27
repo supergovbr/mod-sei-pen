@@ -112,6 +112,16 @@ class CenarioBaseTestCase extends Selenium2TestCase
         $bancoOrgaoB->execute("insert into md_pen_rel_hipotese_legal(id_mapeamento, id_hipotese_legal, id_hipotese_legal_pen, tipo, sin_ativo) values (?, ?, ?, ?, ?);", array(5, 3, 3, 'R', 'S'));
 
         $bancoOrgaoB->execute("update infra_parametro set valor = ? where nome = ?", array(50, 'SEI_TAM_MB_DOC_EXTERNO'));
+
+        //para corrigir o erro do oracle que retorna stream sem acentuação das palavras no teste de URL
+
+        if ($bancoOrgaoA->getBdType()=="oci") {
+            $result=$bancoOrgaoA->query("SELECT texto FROM tarja_assinatura where sta_tarja_assinatura=? and sin_ativo=?", array("V","S"));
+            $strTarja=stream_get_contents($result[0]["TEXTO"]);
+            $bancoOrgaoA->execute("update tarja_assinatura set texto=? where sta_tarja_assinatura=? and sin_ativo=?", array($strTarja,"V","S"));
+        }
+        
+
     }
 
     public static function tearDownAfterClass(): void

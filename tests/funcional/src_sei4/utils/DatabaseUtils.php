@@ -25,4 +25,9 @@ class DatabaseUtils
 		$statement->execute($params);
 		return $statement->fetchAll();
 	}
+
+    
+    public function getBdType(){
+		return $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+	}
 }
