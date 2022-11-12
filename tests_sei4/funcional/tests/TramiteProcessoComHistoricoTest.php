@@ -53,9 +53,9 @@ class TramiteProcessoComHistoricoTest extends CenarioBaseTestCase
         $bancoOrgaoA = new DatabaseUtils(CONTEXTO_ORGAO_A);
 
         // Captura o IDT do processo
-        $idtEnviado=$bancoOrgaoA->query("SELECT tra.id_tramite FROM sei.protocolo p 
-        inner join sei.md_pen_processo_eletronico pen on p.id_protocolo=pen.id_procedimento
-        inner join sei.md_pen_tramite tra on pen.numero_registro=tra.numero_registro
+        $idtEnviado=$bancoOrgaoA->query("SELECT tra.id_tramite FROM protocolo p 
+        inner join md_pen_processo_eletronico pen on p.id_protocolo=pen.id_procedimento
+        inner join md_pen_tramite tra on pen.numero_registro=tra.numero_registro
         where protocolo_formatado=?",array(self::$protocoloTeste));
 
         $curl_handler = curl_init();
