@@ -2059,6 +2059,8 @@ class ProcessoEletronicoRN extends InfraRN
         $objVerificadorInstalacaoRN = new VerificadorInstalacaoRN();
         $objVerificadorInstalacaoRN->verificarConexaoBarramentoPEN();
     } catch (\Exception $e) {
+        LogSEI::getInstance()->gravar("Falha de comunicação com o Processo Eletrônico Nacional. Por favor, tente novamente mais tarde.");
+        LogSEI::getInstance()->gravar(InfraException::inspecionar($e));
         throw new InfraException("Falha de comunicação com o Processo Eletrônico Nacional. Por favor, tente novamente mais tarde.");
     }
   }
