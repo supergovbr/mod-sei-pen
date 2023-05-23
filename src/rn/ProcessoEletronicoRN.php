@@ -648,22 +648,85 @@ class ProcessoEletronicoRN extends InfraRN
             return $objPenWs->enviarProcesso($parametros);
         });
 
-    } catch (\SoapFault $e) {
-        $strMensagem = str_replace(array("\n", "\r"), ' ', InfraString::formatarJavaScript(utf8_decode($e->faultstring)));
-      if ($e instanceof \SoapFault && !empty($e->detail->interoperabilidadeException->codigoErro) && $e->detail->interoperabilidadeException->codigoErro == '0005') {
-          $$strMensagem .= 'O código mapeado para a unidade ' . utf8_decode($parametros->novoTramiteDeProcesso->processo->documento[0]->produtor->unidade->nome) . ' está incorreto.';
-      }
+        } catch (\SoapFault $e) {
+            $strMensagem = str_replace(array("\n", "\r"), ' ', InfraString::formatarJavaScript(utf8_decode($e->faultstring)));
+            if ($e instanceof \SoapFault && !empty($e->detail->interoperabilidadeException->codigoErro) && $e->detail->interoperabilidadeException->codigoErro == '0005') {
+                $strMensagem .= 'O código mapeado para a unidade ' . utf8_decode($parametros->novoTramiteDeProcesso->processo->documento[0]->produtor->unidade->nome) . ' está incorreto.';
+            }
 
-        $strDetalhes = str_replace(array("\n", "\r"), ' ', InfraString::formatarJavaScript($this->tratarFalhaWebService($e)));
-        throw new InfraException($strMensagem, $e, $strDetalhes);
-    } catch (\Exception $e) {
-        $mensagem = "Falha no envio externo do processo. Verifique log de erros do sistema para maiores informações.";
-        $detalhes = InfraString::formatarJavaScript($this->tratarFalhaWebService($e));
-        throw new InfraException($mensagem, $e, $detalhes);
+            $strDetalhes = str_replace(array("\n", "\r"), ' ', InfraString::formatarJavaScript($this->tratarFalhaWebService($e)));
+            $detalhes = InfraString::formatarJavaScript($this->tratarFalhaWebService($e));
+            if (strpos(strtolower($strMensagem), "hash de ao menos um componente digital não confere")) {
+                $strMensagem = $this->validarMudancaOrdemDocumentos($parametros->dblIdProcedimento, $strMensagem, $parametros);
+            }
+            throw new InfraException($strMensagem, $e, $strDetalhes);
+        } catch (\Exception $e) {
+            $mensagem = "Falha no envio externo do processo. Verifique log de erros do sistema para maiores informações.";
+            $detalhes = InfraString::formatarJavaScript($this->tratarFalhaWebService($e));
+            throw new InfraException($mensagem, $e, $detalhes);
+        }
     }
-  }
 
-  public function listarPendencias($bolTodasPendencias)
+    private function validarMudancaOrdemDocumentos($dblIdProcedimento, $strMensagem, $params = null)
+    {
+        $objProcessoEletronicoDTO = new ProcessoEletronicoDTO();
+        $objProcessoEletronicoDTO->setDblIdProcedimento($dblIdProcedimento);
+
+        $objProcessoEletronicoRN = new ProcessoEletronicoRN();
+        $objUltimoTramiteDTO = $objProcessoEletronicoRN->consultarUltimoTramite($objProcessoEletronicoDTO);
+        $numIdTramite = $objUltimoTramiteDTO->getNumIdTramite();
+
+        if (!is_null($numIdTramite) && $numIdTramite > 0) {
+            $objAtividadeDTO = new AtividadeDTO();
+            $objAtividadeDTO->setDblIdProtocolo($dblIdProcedimento);
+            $objAtividadeDTO->setNumIdTarefa(TarefaRN::$TI_PROCESSO_ALTERACAO_ORDEM_ARVORE);
+            $objAtividadeDTO->setOrdDthAbertura(InfraDTO::$TIPO_ORDENACAO_DESC);
+            $objAtividadeDTO->retNumIdAtividade();
+            $objAtividadeDTO->retDblIdProcedimentoProtocolo();
+
+            $objAtividadeRN = new AtividadeRN();
+            $arrObjAtividadeDTO = $objAtividadeRN->contarRN0035($objAtividadeDTO);
+
+            $objProtocoloDTO = new RelProtocoloProtocoloDTO();
+            $objProtocoloDTO->setDblIdProtocolo1($objAtividadeDTO->getDblIdProtocolo());
+            $objProtocoloDTO->setOrd('IdRelProtocoloProtocolo', InfraDTO::$TIPO_ORDENACAO_ASC);
+            $objProtocoloDTO->retTodos();
+            $objProtocoloBD = new RelProtocoloProtocoloBD(BancoSEI::getInstance());
+            $arrProtocolos = $objProtocoloBD->listar($objProtocoloDTO);
+
+            # PROTOCOLO
+            $objProtocoloDTO = new ProtocoloDTO();
+            $objProtocoloDTO->setDblIdProtocolo($objAtividadeDTO->getDblIdProtocolo());
+            $objProtocoloDTO->setOrd('IdProtocolo', InfraDTO::$TIPO_ORDENACAO_ASC);
+            $objProtocoloDTO->retTodos();
+            $objProtocoloBD = new ProtocoloBD(BancoSEI::getInstance());
+            $protocolos = $objProtocoloBD->listar($objProtocoloDTO)[0];
+
+
+            $msg = "Não foi possível enviar o processo '".$protocolos->getStrProtocoloFormatado()."' por meio do Tramita.GOV.BR, em decorrência de alteração da ordem de um ou mais documentos na árvore do processo. A seguir, a lista dos documentos com ordem alterada:";
+            foreach ($arrProtocolos as $index => $protocolo) {
+                if ($index != $protocolo->getNumSequencia()){
+                    $documento = str_pad($protocolo->getDblIdProtocolo2(), 6, '0', STR_PAD_LEFT);
+                    $pos = $index + 1;
+                    $sequencia = $protocolo->getNumSequencia() + 1;
+                    $msg .= " A ordem do documento $documento foi modificada na árvore do processo, mudando da posição $pos para a posição $sequencia.";
+                }
+            }
+            $msg .= " Sugere-se desfazer as alterações acima listadas antes de realizar nova tentativa de trâmite. Mantenha sempre a ordem original dos documentos de processos recebidos pelo Tramita.GOV.BR, uma vez que sua instrução foi realizada por outro órgão. Tenha em mente que qualquer alteração nessa ordem pode impedir um novo trâmite do processo.";
+
+            if ($arrObjAtividadeDTO > 0) {
+                $strMensagem = str_replace(
+                    'hash de ao menos um componente digital não confere',
+                    $msg,
+                    $strMensagem
+                );
+            }
+        }
+
+        return $strMensagem;
+    }
+
+    public function listarPendencias($bolTodasPendencias)
     {
       $arrObjPendenciaDTO = array();
 
