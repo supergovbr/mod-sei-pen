@@ -212,11 +212,12 @@ class ExpedirProcedimentoRN extends InfraRN {
             $this->objProcessoEletronicoRN->cancelarTramite($objTramiteInconsistente->IDT);
         }
 
-          $param = new stdClass();
-          $param->novoTramiteDeProcesso = new stdClass();
-          $param->novoTramiteDeProcesso->cabecalho = $objCabecalho;
-          $param->novoTramiteDeProcesso->processo = $objProcesso;
-          $novoTramite = $this->objProcessoEletronicoRN->enviarProcesso($param);
+            $param = new stdClass();
+            $param->novoTramiteDeProcesso = new stdClass();
+            $param->novoTramiteDeProcesso->cabecalho = $objCabecalho;
+            $param->novoTramiteDeProcesso->processo = $objProcesso;
+            $param->dblIdProcedimento = $dblIdProcedimento;
+            $novoTramite = $this->objProcessoEletronicoRN->enviarProcesso($param);
 
           $numIdTramite = $novoTramite->dadosTramiteDeProcessoCriado->IDT;
           $this->lancarEventoEnvioMetadados($numIdTramite);
@@ -2455,13 +2456,13 @@ class ExpedirProcedimentoRN extends InfraRN {
             $objInfraException->adicionarValidacao('Não é possível tramitar um processo de nível restrito sem a hipótese legal mapeada.', $strAtributoValidacao);
         }
 
-          $objHipoteseLegalDTO = new HipoteseLegalDTO();
-          $objHipoteseLegalDTO->setNumIdHipoteseLegal($objProcedimentoDTO->getNumIdHipoteseLegalProtocolo());
-          $objHipoteseLegalDTO->setBolExclusaoLogica(false);
-          $objHipoteseLegalDTO->retStrNome();
-          $objHipoteseLegalDTO->retStrSinAtivo();
-          $objHipoteseLegalRN = new HipoteseLegalRN();
-          $dados = $objHipoteseLegalRN->consultar($objHipoteseLegalDTO);
+            $objHipoteseLegalDTO = new HipoteseLegalDTO();
+            $objHipoteseLegalDTO->setNumIdHipoteseLegal($objProcedimentoDTO->getNumIdHipoteseLegalProtocolo());
+            $objHipoteseLegalDTO->setBolExclusaoLogica(false);
+            $objHipoteseLegalDTO->retStrNome();
+            $objHipoteseLegalDTO->retStrSinAtivo();
+            $objHipoteseLegalRN = new HipoteseLegalRN();
+            $dados = $objHipoteseLegalRN->consultar($objHipoteseLegalDTO);
 
           $objPenRelHipoteseLegalEnvioRN = new PenRelHipoteseLegalEnvioRN();
         if(!empty($dados)){
