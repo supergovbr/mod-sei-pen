@@ -23,6 +23,9 @@ pipeline {
             label "MOD-SEI-PEN"
         }
     }
+    options {
+          timeout(time: 1, unit: 'HOURS')
+    }
 
     parameters {
         string(
@@ -154,6 +157,9 @@ pipeline {
             steps {
 
                 script{
+
+                    FOLDERCACHE = "/home/jenkins/files_cache_tmp"
+
                     DATABASE = params.database
                     GITURL = params.urlGitSpe
                     GITCRED = params.credentialGitSpe
@@ -234,6 +240,9 @@ pipeline {
 
                 rm -rf ${FOLDERSPE}_tmp
                 mkdir -p ${FOLDERSPE}_tmp
+
+                mkdir -p ${FOLDERCACHE}
+                touch ${FOLDERCACHE}/teste
                 """
 
                 dir("${FOLDERSPE}_tmp"){
@@ -376,17 +385,15 @@ pipeline {
                 dir("${FOLDERMODULO}"){
                     sh script: """#!/bin/bash
 
+                    set -e
+
                     make destroy || true
                     sed -i "s|sistema=.*|sistema=${SISTEMA}|g" Makefile
                     sed -i "s|PARALLEL_TEST_NODES =.*|PARALLEL_TEST_NODES = ${TESTE_PARALLEL}|g" Makefile
                     sed -i "s|^base=.*|base=${DATABASE}|g" Makefile
 
                     make config
-                    if [ "${SISTEMA}" = "sei3" ]; then
-                        sed -i "s|SEI_PATH=.*|SEI_PATH=${FOLDERSPE}|g" ${FOLDER_FUNCIONAIS}/.env
-                    else
-                        sed -i "s|SEI_PATH=.*|SEI_PATH=${FOLDERSPE}/src|g" ${FOLDER_FUNCIONAIS}/.env
-                    fi
+                    sed -i "s|SEI_PATH=.*|SEI_PATH=${FOLDERSPE}/src|g" ${FOLDER_FUNCIONAIS}/.env
                     sed -i "s|ORG1_CERTIFICADO_SENHA=.*|ORG1_CERTIFICADO_SENHA=$ORG1_CERT_PASS|g" ${FOLDER_FUNCIONAIS}/.env
                     sed -i "s|ORG2_CERTIFICADO_SENHA=.*|ORG2_CERTIFICADO_SENHA=$ORG2_CERT_PASS|g" ${FOLDER_FUNCIONAIS}/.env
 
@@ -460,6 +467,10 @@ pipeline {
                     sleep 5
                     make check-isalive
 
+
+                    mkdir -p ${FOLDER_FUNCIONAIS}/.tmp/
+                    \\cp -R ${FOLDERCACHE}/* ${FOLDER_FUNCIONAIS}/.tmp/
+
                     echo ""
                     echo "Vamos instalar o modulo. A saida n sera mostrada aqui. Apenas se houver erro..."
                     set +e
@@ -468,6 +479,8 @@ pipeline {
                     set -e
                     if [ "\$es" = "0" ]; then
                         echo "Instalado sem erro"
+
+                        \\cp -R ${FOLDER_FUNCIONAIS}/.tmp/* ${FOLDERCACHE}/
                     else
                         cat tempinstall.txt
                         exit 1
@@ -480,10 +493,18 @@ pipeline {
                     docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org1-http bash -c "mkdir -p /opt/sei/temp; chown apache /opt/sei/temp"
                     docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org2-http bash -c "mkdir -p /opt/sip/temp; chown apache /opt/sip/temp"
 
+
                     #lembrar de retirar
                     if [ "${SISTEMA}" = "super" ]; then
                         docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org1-http bash -c "/entrypoint.sh" || true
+                        docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org2-http bash -c "/entrypoint.sh" || true
                     fi
+                    if [ "${SISTEMA}" = "sei4" ] && [ "${DATABASE}" = "oracle" ]; then
+                        docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org1-http bash -c "/entrypoint.sh" || true
+                        docker-compose -f tests_${SISTEMA}/funcional/docker-compose.yml --env-file tests_${SISTEMA}/funcional/.env exec org2-http bash -c "/entrypoint.sh" || true
+                    fi
+
+                    make check-isalive
 
                     pwd
                     """, label: "Configura sobe ambiente e instala modulo"
