@@ -104,10 +104,10 @@ try {
         $objInfraException->lancarValidacao('A unidade ' . $mapIdUnidade[$objResultado[0]->getNumIdUnidade()] .' do sistema já está mapeada com a unidade '.$_POST['txtUnidadePen'].' do Portal de Administração.');     }
       // CARREGAR NOME E SIGLA DA ESTRUTURA
       $objProcessoEletronico     = new ProcessoEletronicoRN();
-      $objProcessoEletronicoDTO  = $objProcessoEletronico->listarEstruturas($numIdRepositorioOrigem, $_POST['id_unidade_rh']);
+      $objProcessoEletronicoDTO  = $objProcessoEletronico->buscarEstrutura($numIdRepositorioOrigem, $_POST['id_unidade_rh']);
 
-      $nomeUnidadeRH = $objProcessoEletronicoDTO[0]->getStrNome();
-      $siglaUnidadeRH = $objProcessoEletronicoDTO[0]->getStrSigla();
+      $nomeUnidadeRH = $objProcessoEletronicoDTO->getStrNome();
+      $siglaUnidadeRH = $objProcessoEletronicoDTO->getStrSigla();
       $objPenUnidadeDTO = new PenUnidadeDTO();
       $objPenUnidadeDTO->setNumIdUnidade($_POST['id_unidade']);
       $objPenUnidadeDTO->setNumIdUnidadeRH($_POST['id_unidade_rh']);
@@ -190,11 +190,12 @@ try {
     //Verifica se o numero da unidade esta vazio, senão estiver busca o nome da unidade para exibição
     $strNomeUnidadeSelecionada = '';
   if(!empty($objPenUnidadeDTO->getNumIdUnidadeRH())){
-      $objProcessoEletronico     = new ProcessoEletronicoRN();
-      $objProcessoEletronicoDTO  = $objProcessoEletronico->listarEstruturas($numIdRepositorioOrigem, $objPenUnidadeDTO->getNumIdUnidadeRH());
 
-    if(!is_null($objProcessoEletronicoDTO[0])){
-        $strNomeUnidadeSelecionada = $objProcessoEletronicoDTO[0]->getStrNome();
+    $objProcessoEletronico     = new ProcessoEletronicoRN();
+    $objProcessoEletronicoDTO  = $objProcessoEletronico->buscarEstrutura($numIdRepositorioOrigem, $objPenUnidadeDTO->getNumIdUnidadeRH());
+
+    if(!is_null($objProcessoEletronicoDTO)){
+        $strNomeUnidadeSelecionada = $objProcessoEletronicoDTO->getStrNome();
     }else{
         $strNomeUnidadeSelecionada = 'Unidade não encontrada.';
     }
