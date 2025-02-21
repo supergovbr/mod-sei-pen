@@ -1169,7 +1169,7 @@ class ProcessoEletronicoRN extends InfraRN
         $objResultado->NRE = $objResultado->nre;         
 
         // verificar se é um documento avulso
-        if (!property_exists($objResultado,'processo') || $objResultado->processo == null) {
+        if (!property_exists($objResultado, 'processo') || $objResultado->processo == null) {
             $objResultado->metadados = $objResultado;
             return $objResultado;
         }
@@ -1686,7 +1686,7 @@ class ProcessoEletronicoRN extends InfraRN
             $arrResultado->tramites[0] = array_filter(
               get_object_vars($arrResultado->tramites[0]), function ($value) {
                     return !is_null($value);
-                }
+              }
             );
 
             $arrObjTramite[] = $this->converterArrayParaObjeto($arrResultado->tramites[0]);
@@ -2735,10 +2735,10 @@ class ProcessoEletronicoRN extends InfraRN
 
   //Incluída este método isJson porque o endpoint componente-digital-parcial não retorna um Json como os demais endpoints.
   //TODO: Na versão php 8.3, poderemos usar a função Json_validate
-  function isJson($string) {
+  private function isJson($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
- }
+  }
     /**
      * Iniciar requisição HTTP utilizado para comunicação Webservice REST
      */
@@ -2748,15 +2748,15 @@ class ProcessoEletronicoRN extends InfraRN
         $arrResultado = $this->strClientGuzzle->request($method, $endpoint, $options);
         $base64 = $arrResultado->getBody()->getContents();
         
-        if($this->isJson($base64)){
-          $foo = json_decode($base64, false);
-        }else{
-          $foo = $base64;
-        }
+      if($this->isJson($base64)){
+        $foo = json_decode($base64, false);
+      }else{
+        $foo = $base64;
+      }
         
-        if (is_array($foo)) {
-          return (object) $foo;
-        }
+      if (is_array($foo)) {
+        return (object) $foo;
+      }
 
         return $foo;
     } catch (RequestException $e) {
